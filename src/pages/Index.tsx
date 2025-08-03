@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FamilyMember } from "@/components/FamilyMember";
 import { MapView } from "@/components/MapView";
 import { SOSButton } from "@/components/SOSButton";
+import { DeviceStatus } from "@/components/DeviceStatus";
 import { GeofenceCard } from "@/components/GeofenceCard";
 import { useMockData } from "@/hooks/useMockData";
 import { useToast } from "@/hooks/use-toast";
@@ -76,11 +77,12 @@ const Index = () => {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
             <TabsTrigger value="family">Family</TabsTrigger>
             <TabsTrigger value="map">Map</TabsTrigger>
             <TabsTrigger value="geofences">Geofences</TabsTrigger>
+            <TabsTrigger value="device">Device</TabsTrigger>
           </TabsList>
 
           <TabsContent value="dashboard" className="space-y-6">
@@ -231,6 +233,15 @@ const Index = () => {
                 />
               ))}
             </div>
+          </TabsContent>
+
+          <TabsContent value="device" className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-semibold">Device Tracking</h2>
+              <Badge variant="outline">system.geotrack.com.np</Badge>
+            </div>
+            
+            <DeviceStatus />
           </TabsContent>
         </Tabs>
       </div>
