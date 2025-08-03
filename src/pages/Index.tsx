@@ -48,89 +48,104 @@ const Index = () => {
   const sosAlerts = familyMembers.filter(m => m.status === "sos").length;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <div className="container mx-auto p-4 max-w-6xl">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h1 className="text-3xl font-bold">Family Circle</h1>
-            <p className="text-muted-foreground">Keep your family safe and connected</p>
-          </div>
-          <div className="flex items-center space-x-4">
-            {sosAlerts > 0 && (
-              <Badge variant="destructive" className="animate-pulse">
-                {sosAlerts} SOS Alert{sosAlerts > 1 ? 's' : ''}
-              </Badge>
-            )}
-            <Button variant="outline" size="sm">
-              <Bell className="h-4 w-4" />
-              {unreadAlerts > 0 && (
-                <Badge variant="destructive" className="ml-1 px-1 text-xs">
-                  {unreadAlerts}
+        {/* Modern Header with Glass Effect */}
+        <div className="glass-card border border-white/20 p-6 mb-8 animate-fade-in">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-gradient-primary rounded-xl shadow-glow float-animation">
+                <MapPin className="h-8 w-8 text-primary-foreground" />
+              </div>
+              <div>
+                <h1 className="text-4xl font-bold text-gradient">Family Circle</h1>
+                <p className="text-muted-foreground text-lg">Keep your family safe and connected</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              {sosAlerts > 0 && (
+                <Badge variant="destructive" className="animate-glow px-3 py-1 text-sm">
+                  {sosAlerts} SOS Alert{sosAlerts > 1 ? 's' : ''}
                 </Badge>
               )}
-            </Button>
-            <Button variant="outline" size="sm">
-              <Settings className="h-4 w-4" />
-            </Button>
+              <Button variant="ghost" size="icon" className="hover-glow relative">
+                <Bell className="h-5 w-5" />
+                {unreadAlerts > 0 && (
+                  <Badge variant="destructive" className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 text-xs animate-glow">
+                    {unreadAlerts}
+                  </Badge>
+                )}
+              </Button>
+              <Button variant="ghost" size="icon" className="hover-glow">
+                <Settings className="h-5 w-5" />
+              </Button>
+            </div>
           </div>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5">
-            <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
-            <TabsTrigger value="family">Family</TabsTrigger>
-            <TabsTrigger value="map">Map</TabsTrigger>
-            <TabsTrigger value="geofences">Geofences</TabsTrigger>
-            <TabsTrigger value="device">Device</TabsTrigger>
+          <TabsList className="glass-card border border-white/20 p-1 bg-white/5 backdrop-blur-md">
+            <TabsTrigger value="dashboard" className="data-[state=active]:bg-gradient-primary data-[state=active]:text-primary-foreground hover-glow">Dashboard</TabsTrigger>
+            <TabsTrigger value="family" className="data-[state=active]:bg-gradient-primary data-[state=active]:text-primary-foreground hover-glow">Family</TabsTrigger>
+            <TabsTrigger value="map" className="data-[state=active]:bg-gradient-primary data-[state=active]:text-primary-foreground hover-glow">Map</TabsTrigger>
+            <TabsTrigger value="geofences" className="data-[state=active]:bg-gradient-primary data-[state=active]:text-primary-foreground hover-glow">Geofences</TabsTrigger>
+            <TabsTrigger value="device" className="data-[state=active]:bg-gradient-primary data-[state=active]:text-primary-foreground hover-glow">Device</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="dashboard" className="space-y-6">
-            {/* Quick Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <Card>
-                <CardContent className="p-4">
-                  <div className="flex items-center space-x-2">
-                    <Users className="h-5 w-5 text-blue-500" />
+          <TabsContent value="dashboard" className="space-y-6 animate-fade-in">
+            {/* Modern Stats Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <Card className="glass-card border border-white/20 interactive-card">
+                <CardContent className="p-6">
+                  <div className="flex items-center space-x-4">
+                    <div className="p-3 bg-gradient-primary rounded-xl">
+                      <Users className="h-6 w-6 text-primary-foreground" />
+                    </div>
                     <div>
                       <p className="text-sm text-muted-foreground">Family Members</p>
-                      <p className="text-2xl font-bold">{familyMembers.length}</p>
+                      <p className="text-3xl font-bold text-gradient">{familyMembers.length}</p>
                     </div>
                   </div>
                 </CardContent>
               </Card>
               
-              <Card>
-                <CardContent className="p-4">
-                  <div className="flex items-center space-x-2">
-                    <Shield className="h-5 w-5 text-green-500" />
+              <Card className="glass-card border border-white/20 interactive-card">
+                <CardContent className="p-6">
+                  <div className="flex items-center space-x-4">
+                    <div className="p-3 bg-gradient-accent rounded-xl">
+                      <Shield className="h-6 w-6 text-accent-foreground" />
+                    </div>
                     <div>
                       <p className="text-sm text-muted-foreground">Online</p>
-                      <p className="text-2xl font-bold">{onlineMembers}</p>
+                      <p className="text-3xl font-bold text-accent-gradient">{onlineMembers}</p>
                     </div>
                   </div>
                 </CardContent>
               </Card>
               
-              <Card>
-                <CardContent className="p-4">
-                  <div className="flex items-center space-x-2">
-                    <MapPin className="h-5 w-5 text-purple-500" />
+              <Card className="glass-card border border-white/20 interactive-card">
+                <CardContent className="p-6">
+                  <div className="flex items-center space-x-4">
+                    <div className="p-3 bg-gradient-secondary rounded-xl">
+                      <MapPin className="h-6 w-6 text-secondary-foreground" />
+                    </div>
                     <div>
                       <p className="text-sm text-muted-foreground">Geofences</p>
-                      <p className="text-2xl font-bold">{geofences.filter(g => g.isActive).length}</p>
+                      <p className="text-3xl font-bold">{geofences.filter(g => g.isActive).length}</p>
                     </div>
                   </div>
                 </CardContent>
               </Card>
               
-              <Card>
-                <CardContent className="p-4">
-                  <div className="flex items-center space-x-2">
-                    <Bell className="h-5 w-5 text-orange-500" />
+              <Card className="glass-card border border-white/20 interactive-card">
+                <CardContent className="p-6">
+                  <div className="flex items-center space-x-4">
+                    <div className="p-3 bg-gradient-primary rounded-xl">
+                      <Bell className="h-6 w-6 text-primary-foreground" />
+                    </div>
                     <div>
                       <p className="text-sm text-muted-foreground">Alerts</p>
-                      <p className="text-2xl font-bold">{unreadAlerts}</p>
+                      <p className="text-3xl font-bold text-gradient">{unreadAlerts}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -140,21 +155,21 @@ const Index = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Recent Alerts */}
               <div className="lg:col-span-2">
-                <Card>
+                <Card className="glass-card border border-white/20 animate-fade-in">
                   <CardHeader>
-                    <CardTitle className="flex items-center">
-                      <Bell className="h-5 w-5 mr-2" />
+                    <CardTitle className="flex items-center text-gradient">
+                      <Bell className="h-6 w-6 mr-3" />
                       Recent Alerts
                     </CardTitle>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="custom-scrollbar max-h-96 overflow-y-auto">
                     <div className="space-y-3">
                       {alerts.slice(0, 5).map((alert) => (
-                        <div key={alert.id} className={`flex items-center space-x-3 p-3 rounded-lg border ${!alert.isRead ? 'bg-muted/50' : ''}`}>
-                          <div className="flex-shrink-0">
-                            {alert.type === "sos" && <AlertTriangle className="h-5 w-5 text-red-500" />}
-                            {alert.type === "geofence" && <MapPin className="h-5 w-5 text-blue-500" />}
-                            {alert.type === "battery" && <BatteryLow className="h-5 w-5 text-orange-500" />}
+                        <div key={alert.id} className={`flex items-center space-x-4 p-4 rounded-xl border backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] ${!alert.isRead ? 'bg-primary/10 border-primary/30' : 'bg-white/5 border-white/20'}`}>
+                          <div className="flex-shrink-0 p-2 rounded-lg bg-gradient-primary">
+                            {alert.type === "sos" && <AlertTriangle className="h-5 w-5 text-primary-foreground" />}
+                            {alert.type === "geofence" && <MapPin className="h-5 w-5 text-primary-foreground" />}
+                            {alert.type === "battery" && <BatteryLow className="h-5 w-5 text-primary-foreground" />}
                           </div>
                           <div className="flex-1 min-w-0">
                             <p className="text-sm font-medium">{alert.message}</p>
@@ -164,7 +179,7 @@ const Index = () => {
                             </div>
                           </div>
                           {!alert.isRead && (
-                            <Badge variant="default" className="px-2 py-1 text-xs">New</Badge>
+                            <Badge variant="default" className="px-3 py-1 text-xs animate-glow">New</Badge>
                           )}
                         </div>
                       ))}
@@ -174,71 +189,85 @@ const Index = () => {
               </div>
 
               {/* SOS Button */}
-              <div>
+              <div className="animate-fade-in">
                 <SOSButton />
               </div>
             </div>
           </TabsContent>
 
-          <TabsContent value="family" className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-semibold">Family Members</h2>
-              <Button>
-                <Plus className="h-4 w-4 mr-2" />
-                Add Member
-              </Button>
+          <TabsContent value="family" className="space-y-6 animate-fade-in">
+            <div className="glass-card border border-white/20 p-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-3xl font-bold text-gradient">Family Members</h2>
+                <Button className="btn-gradient hover-glow">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add Member
+                </Button>
+              </div>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {familyMembers.map((member) => (
-                <FamilyMember
-                  key={member.id}
-                  member={member}
-                  onCall={() => handleCall(member.id)}
-                  onLocate={() => handleLocate(member.id)}
-                />
+                <div key={member.id} className="animate-fade-in">
+                  <FamilyMember
+                    member={member}
+                    onCall={() => handleCall(member.id)}
+                    onLocate={() => handleLocate(member.id)}
+                  />
+                </div>
               ))}
             </div>
           </TabsContent>
 
-          <TabsContent value="map" className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-semibold">Family Map</h2>
-              <Button variant="outline">
-                <MapPin className="h-4 w-4 mr-2" />
-                Center on Me
-              </Button>
+          <TabsContent value="map" className="space-y-6 animate-fade-in">
+            <div className="glass-card border border-white/20 p-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-3xl font-bold text-gradient">Family Map</h2>
+                <Button variant="outline" className="hover-glow">
+                  <MapPin className="h-4 w-4 mr-2" />
+                  Center on Me
+                </Button>
+              </div>
             </div>
             
-            <MapView familyMembers={familyMembers} />
+            <div className="glass-card border border-white/20 p-1 rounded-2xl">
+              <MapView familyMembers={familyMembers} />
+            </div>
           </TabsContent>
 
-          <TabsContent value="geofences" className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-semibold">Geofences</h2>
-              <Button>
-                <Plus className="h-4 w-4 mr-2" />
-                Add Geofence
-              </Button>
+          <TabsContent value="geofences" className="space-y-6 animate-fade-in">
+            <div className="glass-card border border-white/20 p-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-3xl font-bold text-gradient">Geofences</h2>
+                <Button className="btn-gradient hover-glow">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add Geofence
+                </Button>
+              </div>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {geofences.map((geofence) => (
-                <GeofenceCard
-                  key={geofence.id}
-                  geofence={geofence}
-                  onEdit={() => toast({ title: "Edit Geofence", description: "Opening geofence editor..." })}
-                  onDelete={() => toast({ title: "Delete Geofence", description: "Geofence deleted successfully." })}
-                  onToggle={() => toast({ title: "Geofence Updated", description: `Geofence ${geofence.isActive ? 'deactivated' : 'activated'}.` })}
-                />
+                <div key={geofence.id} className="animate-fade-in">
+                  <GeofenceCard
+                    geofence={geofence}
+                    onEdit={() => toast({ title: "Edit Geofence", description: "Opening geofence editor..." })}
+                    onDelete={() => toast({ title: "Delete Geofence", description: "Geofence deleted successfully." })}
+                    onToggle={() => toast({ title: "Geofence Updated", description: `Geofence ${geofence.isActive ? 'deactivated' : 'activated'}.` })}
+                  />
+                </div>
               ))}
             </div>
           </TabsContent>
 
-          <TabsContent value="device" className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-semibold">Device Tracking</h2>
-              <Badge variant="outline">system.geotrack.com.np</Badge>
+          <TabsContent value="device" className="space-y-6 animate-fade-in">
+            <div className="glass-card border border-white/20 p-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-3xl font-bold text-gradient">Device Tracking</h2>
+                <Badge variant="outline" className="px-4 py-2 text-sm bg-gradient-accent text-accent-foreground">
+                  system.geotrack.com.np
+                </Badge>
+              </div>
             </div>
             
             <DeviceStatus />
