@@ -31,29 +31,39 @@ export class DeviceTracker {
   }
 
   private generateDeviceId(): string {
-    // Create unique device identifier
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    ctx!.textBaseline = 'top';
-    ctx!.font = '14px Arial';
-    ctx!.fillText('Device fingerprint', 2, 2);
-    
-    const fingerprint = canvas.toDataURL();
-    const userAgent = navigator.userAgent;
-    const screenRes = `${window.screen.width}x${window.screen.height}`;
-    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    
-    const combined = `${fingerprint}-${userAgent}-${screenRes}-${timezone}`;
-    
-    // Simple hash function
-    let hash = 0;
-    for (let i = 0; i < combined.length; i++) {
-      const char = combined.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
-      hash = hash & hash; // Convert to 32-bit integer
+    try {
+      // Create unique device identifier
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.textBaseline = 'top';
+        ctx.font = '14px Arial';
+        ctx.fillText('Device fingerprint', 2, 2);
+      }
+      
+      const fingerprint = canvas.toDataURL();
+      const userAgent = navigator.userAgent;
+      const screenWidth = window.screen?.width || 1920;
+      const screenHeight = window.screen?.height || 1080;
+      const screenResolution = `${screenWidth}x${screenHeight}`;
+      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      
+      const combined = `${fingerprint}-${userAgent}-${screenResolution}-${timezone}`;
+      
+      // Simple hash function
+      let hash = 0;
+      for (let i = 0; i < combined.length; i++) {
+        const char = combined.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash; // Convert to 32-bit integer
+      }
+      
+      return `device_${Math.abs(hash).toString(36)}`;
+    } catch (error) {
+      console.error('Error generating device ID:', error);
+      // Fallback to timestamp-based ID
+      return `device_${Date.now().toString(36)}`;
     }
-    
-    return `device_${Math.abs(hash).toString(36)}`;
   }
 
   async getDeviceInfo(): Promise<DeviceInfo> {
@@ -64,7 +74,7 @@ export class DeviceTracker {
       name: this.getDeviceName(),
       platform: navigator.platform,
       userAgent: navigator.userAgent,
-      screenResolution: `${window.screen.width}x${window.screen.height}`,
+      screenResolution: `${window.screen?.width || 1920}x${window.screen?.height || 1080}`,
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       language: navigator.language,
       connectionType: connection?.effectiveType || 'unknown',
