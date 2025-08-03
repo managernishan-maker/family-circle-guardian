@@ -1,3 +1,4 @@
+import { EditableDeviceInfo } from "./EditableDeviceInfo";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -26,7 +27,10 @@ export function DeviceStatus() {
     getCurrentLocation,
     startTracking,
     stopTracking,
-    refreshDeviceInfo
+    refreshDeviceInfo,
+    updateDeviceInfo,
+    deviceId,
+    deviceName
   } = useDeviceTracking();
   
   const { toast } = useToast();
@@ -78,6 +82,15 @@ export function DeviceStatus() {
 
   return (
     <div className="space-y-4">
+      {/* Editable Device Info */}
+      {deviceId && deviceName && (
+        <EditableDeviceInfo
+          deviceId={deviceId}
+          deviceName={deviceName}
+          onDeviceInfoUpdate={updateDeviceInfo}
+        />
+      )}
+
       {/* Device Info Card */}
       <Card>
         <CardHeader>

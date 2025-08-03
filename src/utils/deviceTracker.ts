@@ -24,10 +24,17 @@ export interface LocationData {
 
 export class DeviceTracker {
   private deviceId: string;
+  private deviceName: string;
   private locationWatcher: number | null = null;
 
   constructor() {
-    this.deviceId = this.generateDeviceId();
+    // Load saved device info or generate new
+    this.deviceId = localStorage.getItem('geotrack_device_id') || this.generateDeviceId();
+    this.deviceName = localStorage.getItem('geotrack_device_name') || this.getDeviceName();
+    
+    // Save to localStorage
+    localStorage.setItem('geotrack_device_id', this.deviceId);
+    localStorage.setItem('geotrack_device_name', this.deviceName);
   }
 
   private generateDeviceId(): string {
@@ -71,7 +78,7 @@ export class DeviceTracker {
     
     const deviceInfo: DeviceInfo = {
       id: this.deviceId,
-      name: this.getDeviceName(),
+      name: this.deviceName,
       platform: navigator.platform,
       userAgent: navigator.userAgent,
       screenResolution: `${window.screen?.width || 1920}x${window.screen?.height || 1080}`,
@@ -95,7 +102,7 @@ export class DeviceTracker {
     return deviceInfo;
   }
 
-  private getDeviceName(): string {
+  private getDeviceNameFromUA(): string {
     const userAgent = navigator.userAgent;
     
     if (/iPhone/.test(userAgent)) return 'iPhone';
@@ -199,6 +206,23 @@ export class DeviceTracker {
 
   getDeviceId(): string {
     return this.deviceId;
+  }
+
+  getDeviceName(): string {
+    return this.getDeviceNameFromUA();
+  }
+
+  updateDeviceInfo(newId: string, newName: string): void {
+    this.deviceId = newId;
+    this.deviceName = newName;
+    
+    // Save to localStorage
+    localStorage.setItem('geotrack_device_id', newId);
+    localStorage.setItem('geotrack_device_name', newName);
+  }
+
+  getCurrentDeviceName(): string {
+    return this.deviceName;
   }
 }
 

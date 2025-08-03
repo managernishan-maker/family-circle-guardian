@@ -62,31 +62,48 @@ export function useDeviceTracking() {
 
     const trackingData = {
       deviceId: deviceInfo.id,
+      deviceName: deviceInfo.name,
       deviceInfo,
       location,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      domain: 'system.geotrack.com.np'
     };
 
-    // TODO: Replace with your backend API endpoint
     try {
-      console.log('Tracking data to send to backend:', trackingData);
+      console.log('📍 Sending tracking data to backend:', trackingData);
       
-      // Example API call (uncomment when backend is ready):
-      // await fetch('https://api.system.geotrack.com.np/track', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(trackingData)
-      // });
+      // Simulate API call - Replace with your actual backend endpoint
+      const response = await fetch('https://api.system.geotrack.com.np/track', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Device ${deviceInfo.id}`,
+        },
+        body: JSON.stringify(trackingData)
+      }).catch(err => {
+        console.log('📡 Backend not ready yet - Data logged locally:', err.message);
+        // Store data locally for now
+        const localData = JSON.parse(localStorage.getItem('geotrack_data') || '[]');
+        localData.push(trackingData);
+        localStorage.setItem('geotrack_data', JSON.stringify(localData.slice(-100))); // Keep last 100 entries
+        return null;
+      });
       
+      if (response?.ok) {
+        console.log('✅ Data sent successfully to backend');
+      }
     } catch (error) {
-      console.error('Failed to send tracking data:', error);
+      console.error('❌ Failed to send tracking data:', error);
     }
   };
 
-  const refreshDeviceInfo = () => {
-    loadDeviceInfo();
+  const refreshDeviceInfo = async () => {
+    await loadDeviceInfo();
+  };
+
+  const updateDeviceInfo = (newId: string, newName: string) => {
+    deviceTracker.updateDeviceInfo(newId, newName);
+    loadDeviceInfo(); // Reload to get updated info
   };
 
   return {
@@ -98,6 +115,8 @@ export function useDeviceTracking() {
     startTracking,
     stopTracking,
     refreshDeviceInfo,
-    deviceId: deviceInfo?.id
+    updateDeviceInfo,
+    deviceId: deviceInfo?.id,
+    deviceName: deviceInfo?.name
   };
 }
