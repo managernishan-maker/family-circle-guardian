@@ -73,7 +73,7 @@ export function useDeviceTracking() {
       console.log('📍 Sending tracking data to backend:', trackingData);
       
       // Send to your backend endpoint
-      const response = await fetch('https://system.geotrack.com.np/', {
+      const response = await fetch('https://system.geotrack.com.np/yesama', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
