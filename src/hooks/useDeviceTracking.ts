@@ -66,14 +66,14 @@ export function useDeviceTracking() {
       deviceInfo,
       location,
       timestamp: new Date().toISOString(),
-      domain: 'system.geotrack.com.np'
+      domain: 'demo4.traccer.org'
     };
 
     try {
       console.log('📍 Sending tracking data to backend:', trackingData);
       
       // Send to your backend endpoint
-      const response = await fetch('https://system.geotrack.com.np/yesama', {
+      const response = await fetch('https://demo4.traccer.org/yesama', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

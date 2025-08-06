@@ -128,7 +128,7 @@ export function MapView({ familyMembers }: MapViewProps) {
   }, [provider, familyMembers, googleKey, googleReady]);
 
   return (
-    <Card className="h-96">
+    <Card className="glass-card h-96">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center">
@@ -158,7 +158,7 @@ export function MapView({ familyMembers }: MapViewProps) {
       </CardHeader>
       
       <CardContent>
-        <div className="relative bg-muted rounded-lg h-64 overflow-hidden">
+        <div className="relative rounded-xl h-64 overflow-hidden">
           <div ref={mapContainerRef} className="absolute inset-0" />
           {provider === 'google' && (!googleKey || !googleReady) && (
             <div className="absolute inset-0 flex items-center justify-center text-sm text-muted-foreground px-4 text-center">

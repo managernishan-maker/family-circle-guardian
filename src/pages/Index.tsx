@@ -265,7 +265,7 @@ const Index = () => {
               <div className="flex items-center justify-between">
                 <h2 className="text-3xl font-bold text-gradient">Device Tracking</h2>
                 <Badge variant="outline" className="px-4 py-2 text-sm bg-gradient-accent text-accent-foreground">
-                  system.geotrack.com.np
+                  demo4.traccer.org
                 </Badge>
               </div>
             </div>

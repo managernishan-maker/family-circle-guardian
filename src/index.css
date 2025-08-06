@@ -144,7 +144,7 @@ All colors MUST be HSL.
 @layer components {
   /* Glass morphism card */
   .glass-card {
-    @apply backdrop-blur-glass bg-white/10 border border-white/20 rounded-xl shadow-glass;
+    @apply backdrop-blur-xl bg-white/5 border border-white/15 rounded-2xl shadow-glow;
   }
 
   /* Modern button variants */
